@@ -47,8 +47,12 @@ def save2avi(filename, data=None, fps=25):
     """
     assert data is not None, "data is {}".format(data)
     os.makedirs(os.path.dirname(filename), exist_ok=True)
-    fourcc = cv2.VideoWriter_fourcc("F", "F", "V", "1")
-    writer = cv2.VideoWriter(filename, fourcc, fps, (data[0].shape[1], data[0].shape[0]), 0)
-    for frame in data:
-        writer.write(frame)
-    writer.release()
+    # fourcc = cv2.VideoWriter_fourcc("F", "F", "V", "1")
+    fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v')
+    try:
+        writer = cv2.VideoWriter(filename, fourcc, fps, (data[0].shape[1], data[0].shape[0]), 0)
+        for frame in data:
+            writer.write(frame)
+        writer.release()
+    except:
+        print("Exception while creating the output file")

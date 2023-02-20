@@ -160,9 +160,13 @@ def one_step_inference(lipreader, data_filename, landmarks_filename, dst_filenam
     if isinstance(output, str):
         print(f"hyp: {output}")
     elif isinstance(output, tuple):
-        assert dst_filename[-4:] == ".avi", f"the ext of {dst_filename} should be .avi"
+        assert dst_filename[-4:] == ".mp4", f"the ext of {dst_filename} should be .avi"
         print(f"mouth patch is saved to {dst_filename}.")
-        save2avi(dst_filename, data=output[0], fps=output[1])
+        try:
+            save2avi(dst_filename, data=output[0], fps=output[1])
+        except:
+            print('Could not save the file: ' + dst_filename)
+
     else:
         assert dst_filename[-4:] == ".npz", f"the ext of {dst_filename} should be .npz"
         print(f"embedding is saved to {dst_filename}.")
@@ -173,6 +177,11 @@ def one_step_inference(lipreader, data_filename, landmarks_filename, dst_filenam
 def main():
 
     # -- pick device for inference.
+    # has_gpu = torch.cuda.is_available()
+    # has_mps = getattr(torch,'has_mps',False)
+    # device = "mps" if getattr(torch,'has_mps',False) \
+    #     else "gpu" if torch.cuda.is_available() else "cpu"
+
     if torch.cuda.is_available() and args.gpu_idx >= 0:
         device = torch.device(f"cuda:{args.gpu_idx}")
     else:

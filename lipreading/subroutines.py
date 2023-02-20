@@ -56,7 +56,8 @@ class LipreadingPipeline(object):
 
         if face_track and self.modality == "video":
             from tracker.face_tracker import FaceTracker
-            self.face_tracker = FaceTracker(device="cuda:0")
+            # self.face_tracker = FaceTracker(device="cuda:0")
+            self.face_tracker = FaceTracker(device=device)
         else:
             self.face_tracker = None
 

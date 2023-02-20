@@ -122,7 +122,7 @@ class AVSRDataLoader(object):
         # -- Step 4, affine transformation and crop patch 
         sequence, transformed_frame, transformed_landmarks = \
             self.crop_patch(video_pathname, preprocessed_landmarks)
-        assert sequence is not None, "cannot crop from {}.".format(filename)
+        assert sequence is not None, "cannot crop from {}.".format(video_pathname)
         return sequence
 
 
